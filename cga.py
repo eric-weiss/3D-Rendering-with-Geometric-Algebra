@@ -683,6 +683,49 @@ class R410:
         res[30] = a[30]
         res[31] = a[31]
         return R410.fromarray(res)
+    
+    def Grade(a, r):
+        res = a.mvec.copy()*0.0
+        if r==0:
+            res[0] = a[0]
+        elif r==1:
+            res[1] = a[1]
+            res[2] = a[2]
+            res[3] = a[3]
+            res[4] = a[4]
+            res[5] = a[5]
+        elif r==2:
+            res[6] = a[6]
+            res[7] = a[7]
+            res[8] = a[8]
+            res[9] = a[9]
+            res[10] = a[10]
+            res[11] = a[11]
+            res[12] = a[12]
+            res[13] = a[13]
+            res[14] = a[14]
+            res[15] = a[15]
+        elif r==3:
+            res[16] = a[16]
+            res[17] = a[17]
+            res[18] = a[18]
+            res[19] = a[19]
+            res[20] = a[20]
+            res[21] = a[21]
+            res[22] = a[22]
+            res[23] = a[23]
+            res[24] = a[24]
+            res[25] = a[25]
+        elif r==4:
+            res[26] = a[26]
+            res[27] = a[27]
+            res[28] = a[28]
+            res[29] = a[29]
+            res[30] = a[30]
+        elif r==5:
+            res[31] = a[31]
+        
+        return R410.fromarray(res)
 
 
     def norm(a):
