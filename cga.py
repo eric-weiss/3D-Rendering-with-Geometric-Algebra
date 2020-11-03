@@ -32,9 +32,9 @@ class R410:
         :return: new instance of R410.
         """
         self = cls()
-        if len(array) != len(self):
-            raise TypeError('length of array must be identical to the dimension '
-                            'of the algebra.')
+#         if len(array) != len(self):
+#             raise TypeError('length of array must be identical to the dimension '
+#                             'of the algebra.')
         self.mvec = array
         return self
         
