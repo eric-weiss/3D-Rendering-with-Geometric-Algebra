@@ -14,7 +14,7 @@ class R410:
          
         Optional, the component index can be set with value.
         """
-        self.mvec = np.zeros((32))
+        self.mvec = np.zeros((32, 1))
         self._base = ["1", "e1", "e2", "e3", "e4", "e5", "e12", "e13", "e14", "e15", "e23", "e24", "e25", "e34", "e35", "e45", "e123", "e124", "e125", "e134", "e135", "e145", "e234", "e235", "e245", "e345", "e1234", "e1235", "e1245", "e1345", "e2345", "e12345"]
         if (value != 0):
             self.mvec[index] = value
@@ -43,7 +43,7 @@ class R410:
         if isinstance(self.mvec, list):
             res = ' + '.join(filter(None, [("%.7f" % x).rstrip("0").rstrip(".")+(["",self._base[i]][i>0]) if abs(x) > 0.000001 else None for i,x in enumerate(self)]))
         else:  # Assume array-like, redirect str conversion
-            res = str(self.mvec)
+            res = str(self.mvec.T)
         if (res == ''):
             return "0"
         return res
@@ -222,7 +222,7 @@ class R410:
         
         The geometric product.
         """
-        if type(b) in (int, float):
+        if type(b) in (int, float, np.ndarray):
             return a.muls(b)
         res = np.zeros((32, max(a.mvec.shape[-1], b.mvec.shape[-1])))
         res[0]=b[0]*a[0]+b[1]*a[1]+b[2]*a[2]+b[3]*a[3]+b[4]*a[4]-b[5]*a[5]-b[6]*a[6]-b[7]*a[7]-b[8]*a[8]+b[9]*a[9]-b[10]*a[10]-b[11]*a[11]+b[12]*a[12]-b[13]*a[13]+b[14]*a[14]+b[15]*a[15]-b[16]*a[16]-b[17]*a[17]+b[18]*a[18]-b[19]*a[19]+b[20]*a[20]+b[21]*a[21]-b[22]*a[22]+b[23]*a[23]+b[24]*a[24]+b[25]*a[25]+b[26]*a[26]-b[27]*a[27]-b[28]*a[28]-b[29]*a[29]-b[30]*a[30]-b[31]*a[31]
@@ -376,7 +376,7 @@ class R410:
         
         Multivector addition
         """
-        if type(b) in (int, float):
+        if type(b) in (int, float, np.ndarray):
             return a.adds(b)
         res = np.zeros((32, max(a.mvec.shape[-1], b.mvec.shape[-1])))
         res[0] = a[0]+b[0]
@@ -419,7 +419,7 @@ class R410:
         
         Multivector subtraction
         """
-        if type(b) in (int, float):
+        if type(b) in (int, float, np.ndarray):
             return a.subs(b)
         res = np.zeros((32, max(a.mvec.shape[-1], b.mvec.shape[-1])))
         res[0] = a[0]-b[0]
@@ -738,6 +738,7 @@ class R410:
     def normalized(a):
         return a * (1 / a.norm())
 
+e0 = R410(1.0, 0)
 e1 = R410(1.0, 1)
 e2 = R410(1.0, 2)
 e3 = R410(1.0, 3)
@@ -775,4 +776,3 @@ if __name__ == '__main__':
     print("e1*e1         :", str(e1*e1))
     print("pss           :", str(e12345))
     print("pss*pss       :", str(e12345*e12345))
-
